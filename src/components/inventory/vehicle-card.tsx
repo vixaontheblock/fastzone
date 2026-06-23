@@ -14,7 +14,7 @@ export default function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
-          <StatusBadge status={vehicle.status} />
+          <StatusBadge status={vehicle.status} financing={vehicle.financing} />
         </div>
 
         <div className="p-4 space-y-1">
@@ -23,9 +23,14 @@ export default function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
             {vehicle.brand} {vehicle.model}
           </h3>
           <p className="text-sm text-white/60">{vehicle.mileage.toLocaleString()} km · {vehicle.transmission}</p>
-          <p className="mt-2 font-bold text-white">
-            {vehicle.price === 0 ? "Consultar precio" : `$${vehicle.price.toLocaleString()}`}
-          </p>
+          <div className="flex items-center justify-between mt-2">
+            <p className="font-bold text-white">
+              {vehicle.price === 0 ? "Consultar precio" : `$${vehicle.price.toLocaleString()}`}
+            </p>
+            {vehicle.financing && (
+              <span className="text-xs text-blue-400">💳 Financiamiento</span>
+            )}
+          </div>
         </div>
       </div>
     </Link>
