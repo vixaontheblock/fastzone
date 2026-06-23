@@ -14,18 +14,15 @@ export default function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
-          <StatusBadge status={vehicle.status} />
+          <StatusBadge status={vehicle.status} mileage={vehicle.mileage} />
         </div>
 
         <div className="p-4 space-y-1">
           <p className="text-xs text-blue-400 uppercase tracking-wider">{vehicle.year}</p>
-          <h3 className="font-semibold text-lg">
-            {vehicle.brand} {vehicle.model}
-          </h3>
+          <h3 className="font-semibold text-lg">{vehicle.brand} {vehicle.model}</h3>
           <p className="text-sm text-white/60">
             {vehicle.mileage === 0 ? "0 km — Nuevo" : `${vehicle.mileage.toLocaleString()} km`} · {vehicle.transmission}
           </p>
-
           <div className="flex items-center justify-between pt-1">
             <p className="font-bold text-white text-lg">
               {vehicle.price === 0 ? "Consultar precio" : `$${vehicle.price.toLocaleString()}`}
