@@ -10,21 +10,53 @@ import WhatsAppButton from "@/components/ui/whatsapp-button";
 
 const PRICE_MAX = 100000;
 
+type SortKey = "default" | "price_asc" | "price_desc" | "km_asc" | "km_desc" | "year_desc";
+
+const sortOptions: { label: string; value: SortKey }[] = [
+  { label: "Destacados", value: "default" },
+  { label: "Precio: menor a mayor", value: "price_asc" },
+  { label: "Precio: mayor a menor", value: "price_desc" },
+  { label: "Km: menor a mayor", value: "km_asc" },
+  { label: "Km: mayor a menor", value: "km_desc" },
+  { label: "Más reciente", value: "year_desc" },
+];
+
 export default function InventoryPage() {
   const [brand, setBrand] = useState("Todas");
   const [status, setStatus] = useState("Todos");
   const [maxPrice, setMaxPrice] = useState(PRICE_MAX);
+  const [sort, setSort] = useState<SortKey>("default");
 
   const brands = ["Todas", ...Array.from(new Set(vehicles.map((v) => v.brand)))];
 
   const filtered = useMemo(() => {
-    return vehicles.filter((v) => {
+    let result = vehicles.filter((v) => {
       const matchBrand = brand === "Todas" || v.brand === brand;
       const matchStatus = status === "Todos" || v.status === status;
       const matchPrice = v.price === 0 || v.price <= maxPrice;
       return matchBrand && matchStatus && matchPrice;
     });
-  }, [brand, status, maxPrice]);
+
+    switch (sort) {
+      case "price_asc":
+        result = [...result].sort((a, b) => (a.price || 999999) - (b.price || 999999));
+        break;
+      case "price_desc":
+        result = [...result].sort((a, b) => (b.price || 0) - (a.price || 0));
+        break;
+      case "km_asc":
+        result = [...result].sort((a, b) => a.mileage - b.mileage);
+        break;
+      case "km_desc":
+        result = [...result].sort((a, b) => b.mileage - a.mileage);
+        break;
+      case "year_desc":
+        result = [...result].sort((a, b) => b.year - a.year);
+        break;
+    }
+
+    return result;
+  }, [brand, status, maxPrice, sort]);
 
   const activeFilters =
     (brand !== "Todas" ? 1 : 0) +
@@ -35,6 +67,7 @@ export default function InventoryPage() {
     setBrand("Todas");
     setStatus("Todos");
     setMaxPrice(PRICE_MAX);
+    setSort("default");
   }
 
   const statusLabel: Record<string, string> = {
@@ -150,7 +183,25 @@ export default function InventoryPage() {
             )}
           </div>
 
-          {/* GRID MASONRY */}
+          {/* SORT */}
+          <div className="mb-6 flex items-center justify-between">
+            <p className="text-sm text-white/40">
+              {filtered.length} {filtered.length === 1 ? "resultado" : "resultados"}
+            </p>
+            <select
+              value={sort}
+              onChange={(e) => setSort(e.target.value as SortKey)}
+              className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/70 focus:outline-none focus:border-blue-500/50 cursor-pointer"
+            >
+              {sortOptions.map((o) => (
+                <option key={o.value} value={o.value} className="bg-neutral-900">
+                  {o.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* GRID */}
           {filtered.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-24 text-center">
               <p className="text-5xl mb-4">🔍</p>
@@ -166,7 +217,8 @@ export default function InventoryPage() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
               {filtered.map((vehicle, index) => {
-                const isFeatured = index === 0;
+                const isFeatured = index === 0 && sort === "default";
+                const isNew = vehicle.mileage === 0;
                 return (
                   <Link
                     key={vehicle.id}
@@ -181,11 +233,16 @@ export default function InventoryPage() {
                           fill
                           className="object-cover transition-transform duration-500 group-hover:scale-105"
                         />
-                        {/* Badges */}
                         <div className="absolute top-3 left-3 flex gap-2">
-                          <span className={`text-xs px-3 py-1 rounded-full backdrop-blur-md border ${statusStyle[vehicle.status]}`}>
-                            {statusLabel[vehicle.status]}
-                          </span>
+                          {isNew ? (
+                            <span className="text-xs px-3 py-1 rounded-full backdrop-blur-md border bg-yellow-400/20 border-yellow-400 text-yellow-300">
+                              ✨ Nuevo
+                            </span>
+                          ) : (
+                            <span className={`text-xs px-3 py-1 rounded-full backdrop-blur-md border ${statusStyle[vehicle.status]}`}>
+                              {statusLabel[vehicle.status]}
+                            </span>
+                          )}
                           {isFeatured && (
                             <span className="text-xs px-3 py-1 rounded-full backdrop-blur-md border bg-blue-500/20 border-blue-400 text-blue-300">
                               ⭐ Destacado
@@ -197,7 +254,6 @@ export default function InventoryPage() {
                             💳 Financiamiento
                           </span>
                         )}
-                        {/* Overlay gradiente en featured */}
                         {isFeatured && (
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                         )}
@@ -209,12 +265,17 @@ export default function InventoryPage() {
                           {vehicle.brand} {vehicle.model}
                         </h3>
                         <p className="text-sm text-white/60">
-                          {vehicle.mileage === 0 ? "0 km — Nuevo" : `${vehicle.mileage.toLocaleString()} km`} · {vehicle.transmission}
+                          {isNew ? "0 km — Nuevo" : `${vehicle.mileage.toLocaleString()} km`} · {vehicle.transmission}
                         </p>
                         <div className="flex items-center justify-between pt-1">
                           <p className={`font-bold text-white ${isFeatured ? "text-2xl" : "text-lg"}`}>
                             {vehicle.price === 0 ? "Consultar precio" : `$${vehicle.price.toLocaleString()}`}
                           </p>
+                          {vehicle.financing && !isFeatured && (
+                            <span className="text-xs px-2.5 py-1 rounded-full border border-blue-500/40 bg-blue-500/10 text-blue-300">
+                              💳 Financiamiento
+                            </span>
+                          )}
                         </div>
                       </div>
                     </div>
