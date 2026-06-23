@@ -1,5 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import PageTransition from "@/components/ui/page-transition";
 
 export const metadata: Metadata = {
   title: {
@@ -30,8 +31,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Fast Zone | Venta de Autos en Panamá",
-    description:
-      "Compra, vende, trade-in e importación de vehículos en Panamá.",
+    description: "Compra, vende, trade-in e importación de vehículos en Panamá.",
   },
   robots: {
     index: true,
@@ -46,7 +46,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" className="dark">
-      <body className="bg-black text-white antialiased">{children}</body>
+      <body className="bg-black text-white antialiased">
+        <PageTransition>{children}</PageTransition>
+      </body>
     </html>
   );
 }
