@@ -6,7 +6,7 @@ import StatusBadge from "@/components/ui/status-badge";
 export default function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
   return (
     <Link href={`/inventory/${vehicle.slug}`}>
-      <div className="rounded-3xl overflow-hidden border border-white/10 bg-white/5 hover:border-white/30 transition">
+      <div className="card-hover rounded-3xl overflow-hidden border border-white/10 bg-white/5 transition cursor-pointer">
         <div className="relative aspect-[4/3]">
           <Image
             src={vehicle.images?.[0] || "/cars/placeholder.jpg"}
@@ -18,7 +18,7 @@ export default function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
         </div>
 
         <div className="p-4 space-y-1">
-          <p className="text-xs text-white/50 uppercase tracking-wider">{vehicle.year}</p>
+          <p className="text-xs text-blue-400 uppercase tracking-wider">{vehicle.year}</p>
           <h3 className="font-semibold text-lg">
             {vehicle.brand} {vehicle.model}
           </h3>
