@@ -5,6 +5,7 @@ import { vehicles } from "@/data/vehicles";
 import VehicleGrid from "@/components/inventory/vehicle-grid";
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
+import WhatsAppButton from "@/components/ui/whatsapp-button";
 
 const PRICE_MAX = 100000;
 
@@ -155,7 +156,7 @@ export default function InventoryPage() {
 
         </div>
       </section>
-
+      <WhatsAppButton />
       <Footer />
     </>
   );
