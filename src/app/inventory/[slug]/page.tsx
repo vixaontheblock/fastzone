@@ -93,12 +93,9 @@ export default async function VehiclePage({ params }: Props) {
                 <span className={`text-xs px-3 py-1 rounded-full border ${statusColor}`}>
                   {statusLabel}
                 </span>
-                {vehicle.financing && (
-                  <span className="text-xs px-3 py-1 rounded-full border border-blue-500/40 bg-blue-500/10 text-blue-300">
-                    💳 Financiamiento disponible
-                  </span>
-                )}
-                <span className="text-xs text-blue-400 uppercase tracking-widest">{vehicle.year}</span>
+                <span className="text-xs text-blue-400 uppercase tracking-widest">
+                  {vehicle.year}
+                </span>
               </div>
               <h1 className="text-5xl font-bold">
                 {vehicle.brand} <span className="text-blue-400">{vehicle.model}</span>
@@ -112,16 +109,6 @@ export default async function VehiclePage({ params }: Props) {
                   ? <span className="text-blue-400">Consultar</span>
                   : `$${vehicle.price.toLocaleString()}`}
               </p>
-              {vehicle.financing && (
-                <Link
-                  href={`https://wa.me/50763388257?text=${whatsappFinancing}`}
-                  target="_blank"
-                  className="mt-3 inline-flex items-center gap-2 rounded-full border border-blue-500/40 bg-blue-500/10 px-4 py-1.5 hover:bg-blue-500/20 transition"
-                >
-                  <span className="text-sm">💳</span>
-                  <span className="text-sm text-blue-300">Consultar financiamiento</span>
-                </Link>
-              )}
             </div>
           </div>
 
@@ -181,7 +168,9 @@ export default async function VehiclePage({ params }: Props) {
               {vehicle.specs?.doors && (
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-5 hover:border-blue-500/40 transition">
                   <p className="text-xs text-blue-400 uppercase tracking-wider mb-1">Puertas / Asientos</p>
-                  <p className="text-xl font-semibold">{vehicle.specs.doors} puertas · {vehicle.specs.seats} asientos</p>
+                  <p className="text-xl font-semibold">
+                    {vehicle.specs.doors} puertas · {vehicle.specs.seats} asientos
+                  </p>
                 </div>
               )}
 
@@ -205,21 +194,23 @@ export default async function VehiclePage({ params }: Props) {
           {vehicle.financing && (
             <>
               <div className="my-10 border-t border-blue-500/20" />
-              <div className="rounded-3xl border border-blue-500/30 bg-blue-600/5 p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-                <div>
-                  <h3 className="text-xl font-bold mb-1">💳 Financiamiento disponible</h3>
-                  <p className="text-white/50 text-sm">
-                    Consulta nuestras opciones de financiamiento y lleva este vehículo hoy mismo.
-                  </p>
+              <Link
+                href={`https://wa.me/50763388257?text=${whatsappFinancing}`}
+                target="_blank"
+                className="group block rounded-3xl border border-blue-500/30 bg-blue-600/5 hover:bg-blue-600/10 hover:border-blue-500/60 transition p-8"
+              >
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                  <div>
+                    <h3 className="text-xl font-bold mb-1">💳 Financiamiento disponible</h3>
+                    <p className="text-white/50 text-sm">
+                      Consulta nuestras opciones y lleva este vehículo hoy mismo.
+                    </p>
+                  </div>
+                  <span className="shrink-0 rounded-full bg-blue-600 group-hover:bg-blue-500 transition px-6 py-3 text-white font-semibold text-center shadow-[0_0_20px_rgba(37,99,235,0.3)]">
+                    Consultar financiamiento
+                  </span>
                 </div>
-                <Link
-                  href={`https://wa.me/50763388257?text=${whatsappFinancing}`}
-                  target="_blank"
-                  className="shrink-0 rounded-full bg-blue-600 hover:bg-blue-500 transition px-6 py-3 text-white font-semibold text-center shadow-[0_0_20px_rgba(37,99,235,0.3)]"
-                >
-                  Consultar financiamiento
-                </Link>
-              </div>
+              </Link>
             </>
           )}
 
