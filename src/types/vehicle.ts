@@ -11,4 +11,14 @@ export interface Vehicle {
   images: string[];
   featured: boolean;
   status: "available" | "sold" | "reserved";
+  specs?: {
+    engine?: string;
+    power?: string;
+    drivetrain?: string;
+    doors?: number;
+    seats?: number;
+    color?: string;
+    origin?: string;
+  };
+  description?: string;
 }
