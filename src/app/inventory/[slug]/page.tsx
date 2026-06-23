@@ -51,6 +51,10 @@ export default async function VehiclePage({ params }: Props) {
     }\n\n📍 ¿Sigue disponible?`
   );
 
+  const whatsappFinancing = encodeURIComponent(
+    `Hola, me interesa conocer las opciones de financiamiento para:\n\n🚗 ${vehicle.brand} ${vehicle.model} ${vehicle.year}\n💰 Precio: $${vehicle.price.toLocaleString()}\n\n¿Pueden darme más información?`
+  );
+
   const statusLabel = {
     available: "Disponible",
     sold: "Vendido",
@@ -79,14 +83,21 @@ export default async function VehiclePage({ params }: Props) {
             <span className="text-white/70">{vehicle.brand} {vehicle.model} {vehicle.year}</span>
           </div>
 
+          {/* GALLERY */}
           <VehicleGallery vehicle={vehicle} />
 
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mt-2">
+          {/* TITLE + PRICE */}
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mt-2">
             <div>
               <div className="flex items-center gap-3 mb-2">
                 <span className={`text-xs px-3 py-1 rounded-full border ${statusColor}`}>
                   {statusLabel}
                 </span>
+                {vehicle.financing && (
+                  <span className="text-xs px-3 py-1 rounded-full border border-blue-500/40 bg-blue-500/10 text-blue-300">
+                    💳 Financiamiento disponible
+                  </span>
+                )}
                 <span className="text-xs text-blue-400 uppercase tracking-widest">{vehicle.year}</span>
               </div>
               <h1 className="text-5xl font-bold">
@@ -101,9 +112,20 @@ export default async function VehiclePage({ params }: Props) {
                   ? <span className="text-blue-400">Consultar</span>
                   : `$${vehicle.price.toLocaleString()}`}
               </p>
+              {vehicle.financing && (
+                <Link
+                  href={`https://wa.me/50763388257?text=${whatsappFinancing}`}
+                  target="_blank"
+                  className="mt-3 inline-flex items-center gap-2 rounded-full border border-blue-500/40 bg-blue-500/10 px-4 py-1.5 hover:bg-blue-500/20 transition"
+                >
+                  <span className="text-sm">💳</span>
+                  <span className="text-sm text-blue-300">Consultar financiamiento</span>
+                </Link>
+              )}
             </div>
           </div>
 
+          {/* DESCRIPTION */}
           {vehicle.description && (
             <p className="mt-6 text-white/60 max-w-2xl text-lg leading-relaxed">
               {vehicle.description}
@@ -112,6 +134,7 @@ export default async function VehiclePage({ params }: Props) {
 
           <div className="my-10 border-t border-blue-500/20" />
 
+          {/* SPECS */}
           <div>
             <span className="accent-line" />
             <h2 className="text-2xl font-bold mb-6">Especificaciones</h2>
@@ -119,46 +142,56 @@ export default async function VehiclePage({ params }: Props) {
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
               <div className="rounded-2xl border border-white/10 bg-white/5 p-5 hover:border-blue-500/40 transition">
                 <p className="text-xs text-blue-400 uppercase tracking-wider mb-1">Kilometraje</p>
-                <p className="text-xl font-semibold">{vehicle.mileage.toLocaleString()} km</p>
+                <p className="text-xl font-semibold">
+                  {vehicle.mileage === 0 ? "0 km — Nuevo" : `${vehicle.mileage.toLocaleString()} km`}
+                </p>
               </div>
+
               <div className="rounded-2xl border border-white/10 bg-white/5 p-5 hover:border-blue-500/40 transition">
                 <p className="text-xs text-blue-400 uppercase tracking-wider mb-1">Transmisión</p>
                 <p className="text-xl font-semibold">{vehicle.transmission}</p>
               </div>
+
               <div className="rounded-2xl border border-white/10 bg-white/5 p-5 hover:border-blue-500/40 transition">
                 <p className="text-xs text-blue-400 uppercase tracking-wider mb-1">Combustible</p>
                 <p className="text-xl font-semibold">{vehicle.fuel}</p>
               </div>
+
               {vehicle.specs?.engine && (
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-5 hover:border-blue-500/40 transition">
                   <p className="text-xs text-blue-400 uppercase tracking-wider mb-1">Motor</p>
                   <p className="text-xl font-semibold">{vehicle.specs.engine}</p>
                 </div>
               )}
+
               {vehicle.specs?.power && (
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-5 hover:border-blue-500/40 transition">
                   <p className="text-xs text-blue-400 uppercase tracking-wider mb-1">Potencia</p>
                   <p className="text-xl font-semibold">{vehicle.specs.power}</p>
                 </div>
               )}
+
               {vehicle.specs?.drivetrain && (
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-5 hover:border-blue-500/40 transition">
                   <p className="text-xs text-blue-400 uppercase tracking-wider mb-1">Tracción</p>
                   <p className="text-xl font-semibold">{vehicle.specs.drivetrain}</p>
                 </div>
               )}
+
               {vehicle.specs?.doors && (
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-5 hover:border-blue-500/40 transition">
                   <p className="text-xs text-blue-400 uppercase tracking-wider mb-1">Puertas / Asientos</p>
                   <p className="text-xl font-semibold">{vehicle.specs.doors} puertas · {vehicle.specs.seats} asientos</p>
                 </div>
               )}
+
               {vehicle.specs?.color && (
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-5 hover:border-blue-500/40 transition">
                   <p className="text-xs text-blue-400 uppercase tracking-wider mb-1">Color</p>
                   <p className="text-xl font-semibold">{vehicle.specs.color}</p>
                 </div>
               )}
+
               {vehicle.specs?.origin && (
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-5 hover:border-blue-500/40 transition">
                   <p className="text-xs text-blue-400 uppercase tracking-wider mb-1">Procedencia</p>
@@ -168,8 +201,31 @@ export default async function VehiclePage({ params }: Props) {
             </div>
           </div>
 
+          {/* FINANCING BANNER */}
+          {vehicle.financing && (
+            <>
+              <div className="my-10 border-t border-blue-500/20" />
+              <div className="rounded-3xl border border-blue-500/30 bg-blue-600/5 p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                <div>
+                  <h3 className="text-xl font-bold mb-1">💳 Financiamiento disponible</h3>
+                  <p className="text-white/50 text-sm">
+                    Consulta nuestras opciones de financiamiento y lleva este vehículo hoy mismo.
+                  </p>
+                </div>
+                <Link
+                  href={`https://wa.me/50763388257?text=${whatsappFinancing}`}
+                  target="_blank"
+                  className="shrink-0 rounded-full bg-blue-600 hover:bg-blue-500 transition px-6 py-3 text-white font-semibold text-center shadow-[0_0_20px_rgba(37,99,235,0.3)]"
+                >
+                  Consultar financiamiento
+                </Link>
+              </div>
+            </>
+          )}
+
           <div className="my-10 border-t border-blue-500/20" />
 
+          {/* CTA */}
           <div className="flex flex-col md:flex-row gap-4">
             <Link
               href={`https://wa.me/50763388257?text=${whatsappMessage}`}
