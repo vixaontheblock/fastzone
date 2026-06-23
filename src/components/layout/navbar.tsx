@@ -18,7 +18,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -28,12 +28,15 @@ export default function Navbar() {
       style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 9999 }}
       className={`w-full bg-black backdrop-blur-xl transition-all duration-300 ${
         scrolled
-          ? "border-b border-blue-500/60 shadow-[0_1px_20px_rgba(37,99,235,0.2)]"
+          ? "border-b border-blue-500/60 shadow-[0_1px_20px_rgba(37,99,235,0.15)]"
           : "border-b border-white/10"
       }`}
     >
-      <div className="container-custom flex h-20 items-center justify-between">
-
+      <div
+        className={`container-custom flex items-center justify-between transition-all duration-300 ${
+          scrolled ? "h-16" : "h-24"
+        }`}
+      >
         <Link href="/">
           <Image
             src="/logo.svg"
@@ -41,7 +44,9 @@ export default function Navbar() {
             width={160}
             height={44}
             priority
-            className="h-11 w-auto"
+            className={`w-auto transition-all duration-300 ${
+              scrolled ? "h-8" : "h-12"
+            }`}
           />
         </Link>
 
