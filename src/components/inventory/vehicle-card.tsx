@@ -22,15 +22,12 @@ export default function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
           <h3 className="font-semibold text-lg">
             {vehicle.brand} {vehicle.model}
           </h3>
-          <p className="text-sm text-white/60">{vehicle.mileage.toLocaleString()} km · {vehicle.transmission}</p>
-          <div className="flex items-center justify-between mt-2">
-            <p className="font-bold text-white">
-              {vehicle.price === 0 ? "Consultar precio" : `$${vehicle.price.toLocaleString()}`}
-            </p>
-            {vehicle.financing && (
-              <span className="text-xs text-blue-400">💳 Financiamiento</span>
-            )}
-          </div>
+          <p className="text-sm text-white/60">
+            {vehicle.mileage === 0 ? "0 km — Nuevo" : `${vehicle.mileage.toLocaleString()} km`} · {vehicle.transmission}
+          </p>
+          <p className="mt-2 font-bold text-white">
+            {vehicle.price === 0 ? "Consultar precio" : `$${vehicle.price.toLocaleString()}`}
+          </p>
         </div>
       </div>
     </Link>
