@@ -6,8 +6,7 @@ interface Props {
 }
 
 export default function StatusBadge({ status, financing }: Props) {
-  const base =
-    "absolute text-xs px-3 py-1 rounded-full backdrop-blur-md border";
+  const base = "absolute text-xs px-3 py-1 rounded-full backdrop-blur-md border";
 
   const styles = {
     available: "bg-green-500/20 border-green-400 text-green-300",
