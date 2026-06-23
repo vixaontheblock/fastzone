@@ -7,6 +7,9 @@
   --border: #262626;
   --primary: #ffffff;
   --secondary: #a1a1aa;
+  --accent: #2563eb;
+  --accent-bright: #3b82f6;
+  --accent-glow: rgba(37, 99, 235, 0.3);
 }
 
 * {
@@ -29,4 +32,24 @@ body {
 
 .section-spacing {
   padding: 6rem 0;
+}
+
+/* Línea decorativa azul en secciones */
+.accent-line {
+  display: block;
+  width: 48px;
+  height: 3px;
+  background: var(--accent-bright);
+  border-radius: 9999px;
+  margin-bottom: 1rem;
+}
+
+/* Glow azul en cards al hover */
+.card-hover {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-hover:hover {
+  border-color: var(--accent-bright) !important;
+  box-shadow: 0 0 20px var(--accent-glow);
 }
