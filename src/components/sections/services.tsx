@@ -36,10 +36,11 @@ const services = [
 
 export default function Services() {
   return (
-    <section className="section-spacing border-t border-white/10">
+    <section className="section-spacing border-t border-blue-500/20">
       <div className="container-custom">
         <div className="mb-14">
-          <p className="mb-2 text-sm uppercase tracking-[0.3em] text-white/50">
+          <span className="accent-line" />
+          <p className="mb-2 text-sm uppercase tracking-[0.3em] text-blue-400/80">
             Servicios
           </p>
           <h2 className="text-4xl font-bold md:text-5xl">
@@ -54,9 +55,9 @@ export default function Services() {
             return (
               <div
                 key={service.title}
-                className="rounded-3xl border border-white/10 bg-white/5 p-6"
+                className="card-hover rounded-3xl border border-white/10 bg-white/5 p-6 group"
               >
-                <Icon className="mb-4 h-7 w-7" />
+                <Icon className="mb-4 h-7 w-7 text-blue-400 group-hover:text-blue-300 transition" />
                 <h3 className="mb-2 text-lg font-semibold">{service.title}</h3>
                 <p className="text-sm text-white/60">{service.description}</p>
               </div>
