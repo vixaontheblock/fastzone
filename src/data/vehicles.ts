@@ -12,7 +12,7 @@ export const vehicles: Vehicle[] = [
     transmission: "Automática",
     fuel: "Híbrido",
     images: [
-      "/cars/xtrail-tekna-2025/1.webp",
+      "/cars/xtrail-tekna-2025/01.webp",
       "/cars/xtrail-tekna-2025/2.webp",
       "/cars/xtrail-tekna-2025/3.webp",
       "/cars/xtrail-tekna-2025/4.webp",
