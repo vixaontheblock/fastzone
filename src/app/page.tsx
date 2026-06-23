@@ -1,6 +1,7 @@
 import Navbar from "@/components/layout/navbar";
 import Hero from "@/components/sections/hero";
 import Services from "@/components/sections/services";
+import HowItWorks from "@/components/sections/how-it-works";
 import FeaturedInventory from "@/components/sections/featured-inventory";
 import WhyFastZone from "@/components/sections/why-fastzone";
 import CTA from "@/components/sections/cta";
@@ -13,6 +14,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <Services />
+      <HowItWorks />
       <FeaturedInventory />
       <WhyFastZone />
       <CTA />
