@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 
 const links = [
@@ -15,11 +15,22 @@ const links = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <header
       style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 9999 }}
-      className="w-full border-b border-white/10 bg-black backdrop-blur-xl"
+      className={`w-full bg-black backdrop-blur-xl transition-all duration-300 ${
+        scrolled
+          ? "border-b border-blue-500/60 shadow-[0_1px_20px_rgba(37,99,235,0.2)]"
+          : "border-b border-white/10"
+      }`}
     >
       <div className="container-custom flex h-20 items-center justify-between">
 
@@ -41,7 +52,7 @@ export default function Navbar() {
               key={link.name}
               href={link.href}
               target={link.href.startsWith("https") ? "_blank" : undefined}
-              className="text-sm text-white/80 transition hover:text-white"
+              className="text-sm text-white/70 transition hover:text-blue-400"
             >
               {link.name}
             </Link>
@@ -50,7 +61,7 @@ export default function Navbar() {
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden text-white"
+          className="md:hidden text-blue-400"
           onClick={() => setOpen(!open)}
           aria-label="Menú"
         >
@@ -60,13 +71,13 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="md:hidden border-t border-white/10 bg-black px-6 py-4 flex flex-col gap-4">
+        <div className="md:hidden border-t border-blue-500/30 bg-black px-6 py-4 flex flex-col gap-4">
           {links.map((link) => (
             <Link
               key={link.name}
               href={link.href}
               target={link.href.startsWith("https") ? "_blank" : undefined}
-              className="text-sm text-white/80 hover:text-white py-2"
+              className="text-sm text-white/70 hover:text-blue-400 transition py-2 border-b border-white/5"
               onClick={() => setOpen(false)}
             >
               {link.name}
