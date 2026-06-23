@@ -34,7 +34,7 @@ export default function Navbar() {
     >
       <div
         className={`container-custom flex items-center justify-between transition-all duration-300 ${
-          scrolled ? "h-16" : "h-24"
+          scrolled ? "h-10" : "h-14"
         }`}
       >
         <Link href="/">
