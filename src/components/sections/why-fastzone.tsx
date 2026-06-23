@@ -25,11 +25,12 @@ const items = [
 
 export default function WhyFastZone() {
   return (
-    <section className="section-spacing border-t border-white/10">
+    <section className="section-spacing border-t border-blue-500/20">
       <div className="container-custom">
-        <h2 className="text-4xl font-bold mb-10">
-          ¿Por qué FAST ZONE?
-        </h2>
+        <div className="mb-10">
+          <span className="accent-line" />
+          <h2 className="text-4xl font-bold">¿Por qué FAST ZONE?</h2>
+        </div>
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {items.map((item) => {
@@ -38,9 +39,11 @@ export default function WhyFastZone() {
             return (
               <div
                 key={item.title}
-                className="rounded-3xl border border-white/10 bg-white/5 p-6"
+                className="card-hover rounded-3xl border border-white/10 bg-white/5 p-6 group"
               >
-                <Icon className="mb-4 h-6 w-6" />
+                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-600/15 border border-blue-500/20">
+                  <Icon className="h-5 w-5 text-blue-400 group-hover:text-blue-300 transition" />
+                </div>
                 <h3 className="font-semibold">{item.title}</h3>
                 <p className="text-sm text-white/60 mt-2">{item.desc}</p>
               </div>
