@@ -6,6 +6,7 @@ import Footer from "@/components/layout/footer";
 import Link from "next/link";
 import Image from "next/image";
 import VehicleGallery from "@/components/inventory/vehicle-gallery";
+import ShareButton from "@/components/ui/share-button";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -46,7 +47,6 @@ export default async function VehiclePage({ params }: Props) {
 
   if (!vehicle) return notFound();
 
-  // Autos relacionados — misma marca primero, luego otros, max 3
   const related = [
     ...vehicles.filter((v) => v.slug !== slug && v.brand === vehicle.brand),
     ...vehicles.filter((v) => v.slug !== slug && v.brand !== vehicle.brand),
@@ -61,6 +61,8 @@ export default async function VehiclePage({ params }: Props) {
   const whatsappFinancing = encodeURIComponent(
     `Hola, me interesa conocer las opciones de financiamiento para:\n\n🚗 ${vehicle.brand} ${vehicle.model} ${vehicle.year}\n💰 Precio: $${vehicle.price.toLocaleString()}\n\n¿Pueden darme más información?`
   );
+
+  const isNew = vehicle.mileage === 0;
 
   const statusLabel = {
     available: "Disponible",
@@ -96,10 +98,16 @@ export default async function VehiclePage({ params }: Props) {
           {/* TITLE + PRICE */}
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mt-2">
             <div>
-              <div className="flex items-center gap-3 mb-2">
-                <span className={`text-xs px-3 py-1 rounded-full border ${statusColor}`}>
-                  {statusLabel}
-                </span>
+              <div className="flex items-center gap-3 mb-2 flex-wrap">
+                {isNew ? (
+                  <span className="text-xs px-3 py-1 rounded-full border bg-yellow-400/20 border-yellow-400 text-yellow-300">
+                    ✨ Nuevo
+                  </span>
+                ) : (
+                  <span className={`text-xs px-3 py-1 rounded-full border ${statusColor}`}>
+                    {statusLabel}
+                  </span>
+                )}
                 <span className="text-xs text-blue-400 uppercase tracking-widest">
                   {vehicle.year}
                 </span>
@@ -238,63 +246,78 @@ export default async function VehiclePage({ params }: Props) {
             >
               Ver más vehículos
             </Link>
+            <ShareButton title={`${vehicle.brand} ${vehicle.model} ${vehicle.year} | Fast Zone`} />
           </div>
 
-          {/* RELATED VEHICLES */}
+          {/* RELATED */}
           {related.length > 0 && (
-            <>
-              <div className="mt-20 border-t border-blue-500/20 pt-16">
-                <div className="flex items-end justify-between mb-10">
-                  <div>
-                    <span className="accent-line" />
-                    <h2 className="text-3xl font-bold">También te puede interesar</h2>
-                  </div>
-                  <Link
-                    href="/inventory"
-                    className="text-sm text-blue-400 hover:text-blue-300 transition"
-                  >
-                    Ver todos →
-                  </Link>
+            <div className="mt-20 border-t border-blue-500/20 pt-16">
+              <div className="flex items-end justify-between mb-10">
+                <div>
+                  <span className="accent-line" />
+                  <h2 className="text-3xl font-bold">También te puede interesar</h2>
                 </div>
+                <Link href="/inventory" className="text-sm text-blue-400 hover:text-blue-300 transition">
+                  Ver todos →
+                </Link>
+              </div>
 
-                <div className="grid gap-6 md:grid-cols-3">
-                  {related.map((r) => (
-                    <Link key={r.id} href={`/inventory/${r.slug}`}>
-                      <div className="group rounded-3xl overflow-hidden border border-white/10 bg-white/5 hover:border-blue-500/60 hover:shadow-[0_0_30px_rgba(37,99,235,0.2)] transition-all duration-300">
-                        <div className="relative aspect-[4/3] overflow-hidden">
-                          <Image
-                            src={r.images?.[0] || "/cars/placeholder.jpg"}
-                            alt={`${r.brand} ${r.model}`}
-                            fill
-                            className="object-cover transition-transform duration-500 group-hover:scale-105"
-                          />
-                          <div className="absolute top-3 left-3 text-xs px-3 py-1 rounded-full backdrop-blur-md border bg-green-500/20 border-green-400 text-green-300">
-                            {r.status === "available" ? "Disponible" : r.status === "sold" ? "Vendido" : "Reservado"}
-                          </div>
+              <div className="grid gap-6 md:grid-cols-3">
+                {related.map((r) => (
+                  <Link key={r.id} href={`/inventory/${r.slug}`}>
+                    <div className="group h-full rounded-3xl overflow-hidden border border-white/10 bg-white/5 hover:border-blue-500/60 hover:shadow-[0_0_30px_rgba(37,99,235,0.2)] transition-all duration-300">
+                      <div className="relative aspect-[4/3] overflow-hidden">
+                        <Image
+                          src={r.images?.[0] || "/cars/placeholder.jpg"}
+                          alt={`${r.brand} ${r.model}`}
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute top-3 left-3">
+                          {r.mileage === 0 ? (
+                            <span className="text-xs px-3 py-1 rounded-full backdrop-blur-md border bg-yellow-400/20 border-yellow-400 text-yellow-300">
+                              ✨ Nuevo
+                            </span>
+                          ) : (
+                            <span className={`text-xs px-3 py-1 rounded-full backdrop-blur-md border ${
+                              r.status === "available"
+                                ? "bg-green-500/20 border-green-400 text-green-300"
+                                : r.status === "sold"
+                                ? "bg-red-500/20 border-red-400 text-red-300"
+                                : "bg-yellow-500/20 border-yellow-400 text-yellow-300"
+                            }`}>
+                              {r.status === "available" ? "Disponible" : r.status === "sold" ? "Vendido" : "Reservado"}
+                            </span>
+                          )}
                         </div>
-                        <div className="p-4 space-y-1">
-                          <p className="text-xs text-blue-400 uppercase tracking-wider">{r.year}</p>
-                          <h3 className="font-semibold text-lg">{r.brand} {r.model}</h3>
-                          <p className="text-sm text-white/60">
-                            {r.mileage === 0 ? "0 km — Nuevo" : `${r.mileage.toLocaleString()} km`} · {r.transmission}
+                        {r.financing && (
+                          <span className="absolute top-3 right-3 text-xs px-3 py-1 rounded-full backdrop-blur-md border bg-blue-500/20 border-blue-400 text-blue-300">
+                            💳 Financiamiento
+                          </span>
+                        )}
+                      </div>
+                      <div className="p-4 space-y-1">
+                        <p className="text-xs text-blue-400 uppercase tracking-wider">{r.year}</p>
+                        <h3 className="font-semibold text-lg">{r.brand} {r.model}</h3>
+                        <p className="text-sm text-white/60">
+                          {r.mileage === 0 ? "0 km — Nuevo" : `${r.mileage.toLocaleString()} km`} · {r.transmission}
+                        </p>
+                        <div className="flex items-center justify-between pt-1">
+                          <p className="font-bold text-white text-lg">
+                            {r.price === 0 ? "Consultar precio" : `$${r.price.toLocaleString()}`}
                           </p>
-                          <div className="flex items-center justify-between pt-1">
-                            <p className="font-bold text-white text-lg">
-                              {r.price === 0 ? "Consultar precio" : `$${r.price.toLocaleString()}`}
-                            </p>
-                            {r.financing && (
-                              <span className="text-xs px-2.5 py-1 rounded-full border border-blue-500/40 bg-blue-500/10 text-blue-300">
-                                💳 Financiamiento
-                              </span>
-                            )}
-                          </div>
+                          {r.financing && (
+                            <span className="text-xs px-2.5 py-1 rounded-full border border-blue-500/40 bg-blue-500/10 text-blue-300">
+                              💳 Financiamiento
+                            </span>
+                          )}
                         </div>
                       </div>
-                    </Link>
-                  ))}
-                </div>
+                    </div>
+                  </Link>
+                ))}
               </div>
-            </>
+            </div>
           )}
 
         </div>
