@@ -29,6 +29,7 @@ export const vehicles: Vehicle[] = [
     ],
     featured: true,
     status: "available",
+    financing: true,
     description: "El SUV perfecto para la familia moderna: más tecnología, más espacio y menor consumo. Sunroof panorámico, interior en cuero, Apple CarPlay y tecnología híbrida para máxima eficiencia.",
     specs: {
       engine: "1.5L Turbo Híbrido",
