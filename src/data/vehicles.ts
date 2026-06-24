@@ -186,7 +186,7 @@ export const vehicles: Vehicle[] = [
     brand: "Toyota",
     model: "Land Cruiser 200 VX",
     year: 2018,
-    price: 55499,
+    price: 59900,
     mileage: 140006,
     transmission: "Automática",
     fuel: "Diesel",
