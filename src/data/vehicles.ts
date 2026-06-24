@@ -28,6 +28,7 @@ export const vehicles: Vehicle[] = [
     ],
     featured: true,
     status: "available",
+    hot: true,
     description: "Potencia V8, lujo y presencia inigualable. Una SUV hecha para cualquier destino.",
     specs: {
       engine: "V8 - 4.6L Turbo",
