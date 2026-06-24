@@ -25,25 +25,15 @@ export default function ContactPage() {
           </div>
 
           <div className="grid gap-12 md:grid-cols-2">
-
-            
             <ContactForm />
 
-            {/* INFO */}
             <div className="flex flex-col gap-8">
-
               <div className="rounded-3xl border border-white/10 bg-white/5 p-8">
                 <h3 className="font-semibold mb-6 text-lg">Información de contacto</h3>
                 <div className="flex flex-col gap-5">
                   <div>
                     <p className="text-xs text-blue-400 uppercase tracking-wider mb-1">WhatsApp</p>
-                    
-                      href="https://wa.me/50763388257"
-                      target="_blank"
-                      className="text-white hover:text-blue-400 transition font-medium"
-                    >
-                      <span>+507 6338-8257</span>
-                    </a>
+                    <p className="text-white font-medium">+507 6338-8257</p>
                   </div>
                   <div>
                     <p className="text-xs text-blue-400 uppercase tracking-wider mb-1">Horario</p>
@@ -62,15 +52,10 @@ export default function ContactPage() {
                 <p className="text-sm text-white/60 mb-5">
                   Cotizamos tu vehículo al instante. Proceso rápido, justo y sin complicaciones.
                 </p>
-                
-                  href="https://wa.me/50763388257?text=Hola%2C%20quiero%20cotizar%20mi%20auto"
-                  target="_blank"
-                  className="inline-block rounded-full bg-blue-600 hover:bg-blue-500 transition px-6 py-3 text-sm text-white font-medium shadow-[0_0_20px_rgba(37,99,235,0.3)]"
-                >
-                  Cotizar mi auto
-                </a>
+                <p className="text-sm text-white/60 mb-5">
+                  Escríbenos por WhatsApp y te damos una cotización al momento.
+                </p>
               </div>
-
             </div>
           </div>
         </div>
