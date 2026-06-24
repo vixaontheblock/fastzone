@@ -10,7 +10,7 @@ const links = [
   { name: "Vender", href: "https://wa.me/50763388257?text=Hola%2C%20quiero%20vender%20mi%20auto" },
   { name: "Trade-In", href: "https://wa.me/50763388257?text=Hola%2C%20quiero%20hacer%20un%20trade-in" },
   { name: "Importar", href: "https://wa.me/50763388257?text=Hola%2C%20quiero%20importar%20un%20veh%C3%ADculo" },
-  { name: "Contacto", href: "https://wa.me/50763388257" },
+  { name: "Contacto", href: "/contacto" },
 ];
 
 export default function Navbar() {
