@@ -26,7 +26,7 @@ export default function ContactPage() {
 
           <div className="grid gap-12 md:grid-cols-2">
 
-            {/* FORM */}
+            
             <ContactForm />
 
             {/* INFO */}
