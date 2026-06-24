@@ -25,6 +25,7 @@ export default function ContactPage() {
           </div>
 
           <div className="grid gap-12 md:grid-cols-2">
+
             {/* FORM */}
             <ContactForm />
 
@@ -41,7 +42,7 @@ export default function ContactPage() {
                       target="_blank"
                       className="text-white hover:text-blue-400 transition font-medium"
                     >
-                      +507 6338-8257
+                      <span>+507 6338-8257</span>
                     </a>
                   </div>
                   <div>
