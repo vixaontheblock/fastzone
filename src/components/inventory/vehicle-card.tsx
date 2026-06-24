@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Vehicle } from "@/types/vehicle";
 import StatusBadge from "@/components/ui/status-badge";
+import { Flame } from "lucide-react";
 
 export default function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
   return (
@@ -15,7 +16,15 @@ export default function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
           <StatusBadge status={vehicle.status} mileage={vehicle.mileage} />
+
+          {vehicle.hot && (
+            <div className="absolute top-3 right-3 flex items-center gap-1.5 rounded-full border border-orange-400/60 bg-orange-500/20 backdrop-blur-md px-3 py-1">
+              <Flame size={11} className="text-orange-400" />
+              <span className="text-xs font-medium text-orange-300">Muy buscado</span>
+            </div>
+          )}
         </div>
+
         <div className="p-4 space-y-1">
           <p className="text-xs text-blue-400 uppercase tracking-wider">{vehicle.year}</p>
           <h3 className="font-semibold text-lg">{vehicle.brand} {vehicle.model}</h3>
