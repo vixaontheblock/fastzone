@@ -7,6 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 import VehicleGallery from "@/components/inventory/vehicle-gallery";
 import ShareButton from "@/components/ui/share-button";
+import { Flame } from "lucide-react";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -108,6 +109,12 @@ export default async function VehiclePage({ params }: Props) {
                     {statusLabel}
                   </span>
                 )}
+                {vehicle.hot && (
+                  <span className="inline-flex items-center gap-1.5 text-xs px-3 py-1 rounded-full border border-orange-400/60 bg-orange-500/20 text-orange-300">
+                    <Flame size={11} className="text-orange-400" />
+                    Muy buscado
+                  </span>
+                )}
                 <span className="text-xs text-blue-400 uppercase tracking-widest">
                   {vehicle.year}
                 </span>
@@ -132,6 +139,17 @@ export default async function VehiclePage({ params }: Props) {
             <p className="mt-6 text-white/60 max-w-2xl text-lg leading-relaxed">
               {vehicle.description}
             </p>
+          )}
+
+          {/* HOT BANNER */}
+          {vehicle.hot && (
+            <div className="mt-6 flex items-center gap-3 rounded-2xl border border-orange-500/30 bg-orange-500/5 px-5 py-4">
+              <Flame size={18} className="text-orange-400 shrink-0" />
+              <div>
+                <p className="text-sm font-semibold text-orange-300">Muy buscado</p>
+                <p className="text-xs text-white/50">Varias personas han preguntado por este vehículo recientemente.</p>
+              </div>
+            </div>
           )}
 
           <div className="my-10 border-t border-blue-500/20" />
@@ -273,7 +291,7 @@ export default async function VehiclePage({ params }: Props) {
                           fill
                           className="object-cover transition-transform duration-500 group-hover:scale-105"
                         />
-                        <div className="absolute top-3 left-3">
+                        <div className="absolute top-3 left-3 flex gap-2">
                           {r.mileage === 0 ? (
                             <span className="text-xs px-3 py-1 rounded-full backdrop-blur-md border bg-yellow-400/20 border-yellow-400 text-yellow-300">
                               ✨ Nuevo
@@ -287,6 +305,12 @@ export default async function VehiclePage({ params }: Props) {
                                 : "bg-yellow-500/20 border-yellow-400 text-yellow-300"
                             }`}>
                               {r.status === "available" ? "Disponible" : r.status === "sold" ? "Vendido" : "Reservado"}
+                            </span>
+                          )}
+                          {r.hot && (
+                            <span className="inline-flex items-center gap-1 text-xs px-3 py-1 rounded-full backdrop-blur-md border border-orange-400/60 bg-orange-500/20 text-orange-300">
+                              <Flame size={10} />
+                              Muy buscado
                             </span>
                           )}
                         </div>
