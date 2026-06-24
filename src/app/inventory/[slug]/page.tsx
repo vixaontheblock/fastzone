@@ -109,12 +109,6 @@ export default async function VehiclePage({ params }: Props) {
                     {statusLabel}
                   </span>
                 )}
-                {vehicle.hot && (
-                  <span className="inline-flex items-center gap-1.5 text-xs px-3 py-1 rounded-full border border-orange-400/60 bg-orange-500/20 text-orange-300">
-                    <Flame size={11} className="text-orange-400" />
-                    Muy buscado
-                  </span>
-                )}
                 <span className="text-xs text-blue-400 uppercase tracking-widest">
                   {vehicle.year}
                 </span>
