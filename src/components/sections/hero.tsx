@@ -5,14 +5,12 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { vehicles } from "@/data/vehicles";
-import { FadeUp } from "@/components/ui/motion";
 
 const featured = [...vehicles]
   .filter((v) => v.status === "available")
   .sort((a, b) => a.mileage - b.mileage)
   .slice(0, 3);
 
-// Slide 0 = texto principal, slides 1-3 = autos
 const TOTAL_SLIDES = featured.length + 1;
 
 export default function Hero() {
@@ -25,13 +23,12 @@ export default function Hero() {
     return () => clearInterval(interval);
   }, []);
 
-  // El slide de auto activo (null si estamos en el slide de texto)
   const activeVehicle = current === 0 ? null : featured[current - 1];
 
   return (
     <section className="relative flex min-h-[100svh] items-center overflow-hidden">
 
-      {/* FONDO — negro sólido para slide principal, imagen para autos */}
+      {/* FONDO */}
       <AnimatePresence mode="sync">
         {current === 0 ? (
           <motion.div
@@ -42,7 +39,6 @@ export default function Hero() {
             transition={{ duration: 1, ease: "easeInOut" }}
             className="absolute inset-0 z-0 bg-[#08101f]"
           >
-            {/* Glow azul decorativo */}
             <div className="absolute top-1/3 left-1/3 w-96 h-96 rounded-full bg-blue-600/10 blur-[140px] pointer-events-none" />
           </motion.div>
         ) : (
@@ -70,12 +66,10 @@ export default function Hero() {
 
       {/* CONTENIDO */}
       <div className="container-custom relative z-10 w-full">
-        {/* pt-[var(--header-h,72px)] evita que el header tape el contenido */}
         <div className="max-w-2xl pt-[80px] pb-10">
 
           <AnimatePresence mode="wait">
             {current === 0 ? (
-              /* ── SLIDE 0: Texto principal ── */
               <motion.div
                 key="main-content"
                 initial={{ opacity: 0, y: 16 }}
@@ -83,55 +77,69 @@ export default function Hero() {
                 exit={{ opacity: 0, y: -16 }}
                 transition={{ duration: 0.5 }}
               >
-                <FadeUp delay={0}>
-                  <p className="mb-3 text-xs uppercase tracking-[0.3em] text-blue-400/80">
-                    FAST ZONE • PANAMÁ
-                  </p>
-                </FadeUp>
+                <motion.p
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0, duration: 0.5 }}
+                  className="mb-3 text-xs uppercase tracking-[0.3em] text-blue-400/80"
+                >
+                  FAST ZONE • PANAMÁ
+                </motion.p>
 
-                <FadeUp delay={0.08}>
-                  <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold leading-tight">
-                    Compra el auto<br />
-                    <span className="text-blue-400">que quieres</span> hoy.
-                  </h1>
-                </FadeUp>
+                <motion.h1
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.08, duration: 0.5 }}
+                  className="text-4xl sm:text-6xl md:text-7xl font-bold leading-tight"
+                >
+                  Compra el auto<br />
+                  <span className="text-blue-400">que quieres</span> hoy.
+                </motion.h1>
 
-                <FadeUp delay={0.16}>
-                  <p className="mt-5 max-w-md text-sm sm:text-base text-white/65 leading-relaxed">
-                    Venta, compra, trade-in e importación de vehículos.<br className="hidden sm:block" />
-                    Atención rápida por WhatsApp.
-                  </p>
-                </FadeUp>
+                <motion.p
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.16, duration: 0.5 }}
+                  className="mt-5 max-w-md text-sm sm:text-base text-white/65 leading-relaxed"
+                >
+                  Venta, compra, trade-in e importación de vehículos.<br className="hidden sm:block" />
+                  Atención rápida por WhatsApp.
+                </motion.p>
 
-                <FadeUp delay={0.22}>
-                  <div className="mt-8 flex flex-col sm:flex-row gap-3">
-                    <Link
-                      href="/inventory"
-                      className="rounded-full bg-blue-600 hover:bg-blue-500 transition px-6 py-3 text-white font-medium text-center text-sm shadow-[0_0_20px_rgba(37,99,235,0.4)]"
-                    >
-                      Ver inventario
-                    </Link>
-                    <Link
-                      href="https://wa.me/50763388257"
-                      target="_blank"
-                      className="rounded-full border border-white/20 hover:border-blue-500/60 transition px-6 py-3 text-center text-sm"
-                    >
-                      Cotizar por WhatsApp
-                    </Link>
-                  </div>
-                </FadeUp>
+                <motion.div
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.22, duration: 0.5 }}
+                  className="mt-8 flex flex-col sm:flex-row gap-3"
+                >
+                  <Link
+                    href="/inventory"
+                    className="rounded-full bg-blue-600 hover:bg-blue-500 transition px-6 py-3 text-white font-medium text-center text-sm shadow-[0_0_20px_rgba(37,99,235,0.4)]"
+                  >
+                    Ver inventario
+                  </Link>
+                  <Link
+                    href="https://wa.me/50763388257"
+                    target="_blank"
+                    className="rounded-full border border-white/20 hover:border-blue-500/60 transition px-6 py-3 text-center text-sm"
+                  >
+                    Cotizar por WhatsApp
+                  </Link>
+                </motion.div>
 
-                <FadeUp delay={0.28}>
-                  <div className="mt-10 flex gap-8 text-white/60 text-sm">
-                    <div><p className="text-blue-400 text-xl font-bold">+10</p>Autos vendidos</div>
-                    <div><p className="text-blue-400 text-xl font-bold">4.9★</p>Reputación</div>
-                    <div><p className="text-blue-400 text-xl font-bold">24h</p>Respuesta</div>
-                  </div>
-                </FadeUp>
+                <motion.div
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.28, duration: 0.5 }}
+                  className="mt-10 flex gap-8 text-white/60 text-sm"
+                >
+                  <div><p className="text-blue-400 text-xl font-bold">+10</p>Autos vendidos</div>
+                  <div><p className="text-blue-400 text-xl font-bold">4.9★</p>Reputación</div>
+                  <div><p className="text-blue-400 text-xl font-bold">24h</p>Respuesta</div>
+                </motion.div>
               </motion.div>
 
             ) : (
-              /* ── SLIDES 1-3: Auto específico ── */
               <motion.div
                 key={activeVehicle!.slug}
                 initial={{ opacity: 0, y: 16 }}
@@ -139,7 +147,6 @@ export default function Hero() {
                 exit={{ opacity: 0, y: -16 }}
                 transition={{ duration: 0.5 }}
               >
-                {/* Etiqueta "Auto destacado" */}
                 <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur-sm px-4 py-1.5">
                   <span className="text-xs text-blue-400 font-medium">{current}/3</span>
                   <span className="text-xs text-white/50">Auto destacado</span>
@@ -153,7 +160,6 @@ export default function Hero() {
                   <span className="text-white/40 font-normal">{activeVehicle!.year}</span>
                 </h2>
 
-                {/* Tags km + estado */}
                 <div className="mt-4 flex flex-wrap gap-2">
                   <span className="rounded-full border border-white/15 bg-white/5 backdrop-blur-sm px-3 py-1 text-xs text-white/70">
                     {activeVehicle!.mileage === 0
@@ -170,8 +176,7 @@ export default function Hero() {
                   )}
                 </div>
 
-                {/* Precio */}
-                {activeVehicle!.price && (
+                {activeVehicle!.price > 0 && (
                   <p className="mt-5 text-3xl sm:text-4xl font-bold text-blue-400">
                     ${activeVehicle!.price.toLocaleString()}{" "}
                     <span className="text-sm font-normal text-white/40">USD</span>
@@ -197,7 +202,7 @@ export default function Hero() {
             )}
           </AnimatePresence>
 
-          {/* Indicadores del slide — siempre visibles */}
+          {/* Indicadores */}
           <div className="mt-10 flex gap-2">
             {Array.from({ length: TOTAL_SLIDES }).map((_, i) => (
               <button
@@ -213,7 +218,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Miniaturas — solo en desktop y solo en slides de autos */}
+      {/* Miniaturas desktop */}
       <AnimatePresence>
         {current > 0 && (
           <motion.div
