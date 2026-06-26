@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import PageTransition from "@/components/ui/page-transition";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: {
@@ -48,6 +49,7 @@ export default function RootLayout({
     <html lang="es" className="dark">
       <body className="bg-black text-white antialiased">
         <PageTransition>{children}</PageTransition>
+        <Analytics />
       </body>
     </html>
   );
