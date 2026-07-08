@@ -9,6 +9,7 @@ export interface Vehicle {
   transmission: string;
   fuel: string;
   images: string[];
+  videos?: string[];
   featured: boolean;
   status: "available" | "sold" | "reserved";
   financing?: boolean;
