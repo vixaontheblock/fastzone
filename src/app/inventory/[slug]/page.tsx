@@ -6,7 +6,6 @@ import Footer from "@/components/layout/footer";
 import Link from "next/link";
 import Image from "next/image";
 import VehicleGallery from "@/components/inventory/vehicle-gallery";
-import VehicleVideoSection from "@/components/inventory/vehicle-video-section";
 import ShareButton from "@/components/ui/share-button";
 import { Flame } from "lucide-react";
 
@@ -217,14 +216,6 @@ export default async function VehiclePage({ params }: Props) {
               )}
             </div>
           </div>
-
-          {/* VIDEOS */}
-          {vehicle.videos && vehicle.videos.length > 0 && (
-            <>
-              <div className="my-10 border-t border-blue-500/20" />
-              <VehicleVideoSection videos={vehicle.videos} />
-            </>
-          )}
 
           {/* FINANCING BANNER */}
           {vehicle.financing && (
