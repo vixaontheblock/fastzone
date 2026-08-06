@@ -67,7 +67,7 @@ export const vehicles: Vehicle[] = [
       "/cars/xtrail-tekna-2025/14.webp",
     ],
     featured: true,
-    status: "available",
+    status: "sold",
     financing: true,
     description: "El SUV perfecto para la familia moderna: más tecnología, más espacio y menor consumo. Sunroof panorámico, interior en cuero, Apple CarPlay y tecnología híbrida para máxima eficiencia.",
     specs: {
